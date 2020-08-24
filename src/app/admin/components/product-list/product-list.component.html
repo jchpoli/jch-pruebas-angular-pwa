@@ -1,0 +1,24 @@
+<a mat-raised-button routerLink="create">Crear nuevo producto</a>
+<table *ngIf="products" mat-table [dataSource]="products" class="mat-elevation-z8 products-table">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let product">{{ product.id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Titulo</th>
+    <td mat-cell *matCellDef="let product">{{ product.title }}</td>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>Precio</th>
+    <td mat-cell *matCellDef="let product">{{ product.price }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let product">
+      <button mat-button color="primary" [routerLink]="['edit', product.id]">Editar</button>
+      <button mat-button color="warn" (click)="deleteProduct(product.id)" >Eliminar</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
