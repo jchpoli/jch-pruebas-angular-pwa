@@ -10,8 +10,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CartService } from 'src/app/core/service/cart/cart.service';
-import { ProductsService } from './../../../core/service/products/products.service';
-import { Product } from './../../../product.model';
+import { ProductsService } from '@core/service/products/products.service';
+import { Product } from '@core/models/product.model';
 
 @Component({
   selector: 'app-product',

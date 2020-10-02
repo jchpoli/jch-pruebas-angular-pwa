@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CartService } from 'src/app/core/service/cart/cart.service';
+import { CartService } from '@core/service/cart/cart.service';
 
 @Component({
   selector: 'app-header',

@@ -1,8 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Product } from './../../../product.model';
-import { environment } from './../../../../environments/environment';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError, retry } from 'rxjs/operators';
+import { Product } from '@core/models/product.model';
+import { environment } from 'src/environments/environment';
+
+interface User {
+  gender?: string;
+  email?: string;
+  phone?: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -36,5 +43,26 @@ export class ProductsService {
 
   deleteProduct(id: string): Observable<any> {
     return this.httpClient.delete<any>(`${environment.url_api}/products/${id}`);
+  }
+
+  getRandomUsers(): Observable<User[]> {
+    return this.httpClient
+      .get<User[]>('https://randomuserr.me/api/?results=2')
+      .pipe(
+        // Reintentar 3 veces más, es decir en total hace la petición 4
+        retry(3),
+        catchError((error) => this.handleError(error)),
+        map((response: any) => response.results as User[])
+      );
+  }
+
+  getFile(): Observable<any> {
+    return this.httpClient.get('assets/miarchivo.txt', {
+      responseType: 'text',
+    });
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    return throwError('Ups algo salio mal');
   }
 }
